@@ -29,10 +29,7 @@ void MainWindow::onSegmentChanged(QString text)
 
 void MainWindow::on_btnTrainingData_clicked()
 {
-    QString filePath = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Training Data"),
-                                                    QString(),
-                                                    tr("Text File (*.txt)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open Training Data"), QString(), tr("Text File (*.txt)"));
 
     if (filePath == "") {
         return;
@@ -45,10 +42,7 @@ void MainWindow::on_btnTrainingData_clicked()
 
 void MainWindow::on_btnTestData_clicked()
 {
-    QString filePath = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Training Data"),
-                                                    QString(),
-                                                    tr("Text File (*.txt)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open Test Data"), QString(), tr("Text File (*.txt)"));
 
     if (filePath == "") {
         return;
