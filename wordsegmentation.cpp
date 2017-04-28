@@ -55,40 +55,26 @@ void WordSegmentation::LLMM(QString text)
     while (!tokens.isEmpty()) {
         segmentation.append(tokens[0]);
 
+        int length = 1;
+
         QString token = segmentation.join(" ");
 
         if (checkWord(token)) {
             word = token;
         }
 
-        if (tokens.size() >= 2) {
-            segmentation.append(tokens[1]);
+        while (length <= MAX_WORD_LENGTH) {
+            if (tokens.size() >= (length + 1)) {
+                segmentation.append(tokens[length]);
 
-            token = segmentation.join(" ");
+                token = segmentation.join(" ");
 
-            if (checkWord(token)) {
-                word = token;
+                if (checkWord(token)) {
+                    word = token;
+                }
             }
-        }
 
-        if (tokens.size() >= 3) {
-            segmentation.append(tokens[2]);
-
-            token = segmentation.join(" ");
-
-            if (checkWord(token)) {
-                word = token;
-            }
-        }
-
-        if (tokens.size() >= 4) {
-            segmentation.append(tokens[3]);
-
-            token = segmentation.join(" ");
-
-            if (checkWord(token)) {
-                word = token;
-            }
+            length++;
         }
 
         if (word == "") {

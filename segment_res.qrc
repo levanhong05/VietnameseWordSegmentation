@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/segment">
+        <file>images/segment.png</file>
+    </qresource>
+</RCC>

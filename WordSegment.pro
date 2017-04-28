@@ -17,14 +17,16 @@ TEMPLATE = app
 SOURCES +=      main.cpp\
                 mainwindow.cpp \
                 wordsegmentation.cpp \
-    machine.cpp
+    #machine.cpp
 
 HEADERS  +=     mainwindow.h \
                 wordsegmentation.h \
-    machine.h \
-    configure.h
+    #machine.h \
+    #configure.h
 
 FORMS    +=     mainwindow.ui
+
+win32:RC_FILE = WordSegment.rc
 
 win32 {
     SOURCEPATH = $$PWD/data
@@ -41,3 +43,6 @@ export(first.depends)
 export(copydata.commands)
 
 QMAKE_EXTRA_TARGETS += first copydata
+
+RESOURCES += \
+    segment_res.qrc

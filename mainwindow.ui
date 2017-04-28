@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Vietnamese Word Segmentation</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="segment_res.qrc">
+    <normaloff>:/segment/images/segment.png</normaloff>:/segment/images/segment.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -30,7 +34,7 @@
       <item row="0" column="2">
        <widget class="QPushButton" name="btnTrainingData">
         <property name="text">
-         <string>Browser</string>
+         <string>Browse</string>
         </property>
        </widget>
       </item>
@@ -58,7 +62,7 @@
       <item row="1" column="2">
        <widget class="QPushButton" name="btnTestData">
         <property name="text">
-         <string>Browser</string>
+         <string>Browse</string>
         </property>
        </widget>
       </item>
@@ -126,6 +130,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="segment_res.qrc"/>
+ </resources>
  <connections/>
 </ui>
