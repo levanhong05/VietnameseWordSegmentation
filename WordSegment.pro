@@ -16,10 +16,13 @@ TEMPLATE = app
 
 SOURCES +=      main.cpp\
                 mainwindow.cpp \
-                wordsegmentation.cpp
+                wordsegmentation.cpp \
+    machine.cpp
 
 HEADERS  +=     mainwindow.h \
-                wordsegmentation.h
+                wordsegmentation.h \
+    machine.h \
+    configure.h
 
 FORMS    +=     mainwindow.ui
 

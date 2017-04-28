@@ -19,6 +19,8 @@ private:
     void print(QString token);
     bool checkWord(QString token);
 
+    QStringList removeTokens(QStringList tokens, int length);
+
 signals:
     void segmentsChanged(QString text);
 

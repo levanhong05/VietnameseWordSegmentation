@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QApplication>
 
+#define MAX_WORD_LENGTH 4
+
 WordSegmentation::WordSegmentation(QObject *parent) :
     QObject(parent)
 {
@@ -46,45 +48,66 @@ bool WordSegmentation::trainingData(QString path)
 void WordSegmentation::LLMM(QString text)
 {
     QString word = "";
-    QString segmentation;
-    QString token = "";
+    QStringList segmentation;
 
-    for (int j = 0; j <= text.length(); j++) {
-        if (text[j] == ' ' || text[j] == '\0' || text[j] == ',' || text[j] == '\n' || text[j] == '.') {
-            if (checkWord(token)) {
-                if (word == "") {
-                    word = token;
-                } else {
-                    segmentation = word + ' ' + token;
+    QStringList tokens = text.split(QRegExp("\\ |\\,|\\.|\\;|\\!"), QString::SkipEmptyParts);
 
-                    if (checkWord(segmentation)) {
-                        word = segmentation;
-                    } else {
-                        emit segmentsChanged(word);
+    while (!tokens.isEmpty()) {
+        segmentation.append(tokens[0]);
 
-                        print(word);
-                        word = token;
-                    }
-                }
-            } else {
-                if (word == "") {
-                    emit segmentsChanged(word);
+        QString token = segmentation.join(" ");
 
-                    print(word);
-                    word = "";
-                }
-            }
-
-            token = "";
-        } else {
-            token = token + text[j];
-            qDebug() << token;
+        if (checkWord(token)) {
+            word = token;
         }
+
+        if (tokens.size() >= 2) {
+            segmentation.append(tokens[1]);
+
+            token = segmentation.join(" ");
+
+            if (checkWord(token)) {
+                word = token;
+            }
+        }
+
+        if (tokens.size() >= 3) {
+            segmentation.append(tokens[2]);
+
+            token = segmentation.join(" ");
+
+            if (checkWord(token)) {
+                word = token;
+            }
+        }
+
+        if (tokens.size() >= 4) {
+            segmentation.append(tokens[3]);
+
+            token = segmentation.join(" ");
+
+            if (checkWord(token)) {
+                word = token;
+            }
+        }
+
+        if (word == "") {
+            emit segmentsChanged(tokens[0] + ": Not found in directory.");
+
+            tokens.takeFirst();
+        } else {
+            emit segmentsChanged(word);
+
+            print(word);
+
+            segmentation = word.split(" ", QString::SkipEmptyParts);
+
+            tokens = removeTokens(tokens, segmentation.size());
+        }
+
+        word = "";
+        segmentation.clear();
     }
-
-    emit segmentsChanged(word);
-
-    print(word);
 }
 
 void WordSegmentation::print(QString token)
@@ -102,6 +125,17 @@ void WordSegmentation::print(QString token)
 bool WordSegmentation::checkWord(QString token)
 {
     return _dictionary.contains(token, Qt::CaseInsensitive);
+}
+
+QStringList WordSegmentation::removeTokens(QStringList tokens, int length)
+{
+    while (length > 0 && !tokens.isEmpty()) {
+        tokens.takeFirst();
+
+        length--;
+    }
+
+    return tokens;
 }
 
 void WordSegmentation::processing(QString path)
