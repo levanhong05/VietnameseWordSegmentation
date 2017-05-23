@@ -15,6 +15,7 @@ WordSegmentation::WordSegmentation(QObject *parent) :
 
 WordSegmentation::~WordSegmentation()
 {
+    _dictionary.clear();
 }
 
 bool WordSegmentation::trainingData(QString path)
